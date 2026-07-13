@@ -1,0 +1,6 @@
+kafka:
+  batch:
+    size: 1000
+
+clickhouse:
+  enabled: true

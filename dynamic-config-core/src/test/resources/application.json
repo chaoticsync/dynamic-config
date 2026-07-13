@@ -1,0 +1,19 @@
+{
+  "server": {
+    "port": 8080,
+    "host": "localhost"
+  },
+  "database": {
+    "host": "mysql",
+    "port": 3306
+  },
+  "logging": {
+    "level": {
+      "root": "INFO"
+    }
+  },
+  "servers": [
+    "app1",
+    "app2"
+  ]
+}
