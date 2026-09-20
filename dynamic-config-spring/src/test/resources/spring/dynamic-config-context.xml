@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="configClient" class="io.dynamicconfig.spring.DynamicConfigClientFactoryBean">
+        <property name="defaults">
+            <map>
+                <entry key="server.port" value="8080"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean class="io.dynamicconfig.spring.processor.DynamicValueBeanPostProcessor">
+        <constructor-arg ref="configClient"/>
+    </bean>
+
+    <bean class="io.dynamicconfig.spring.DynamicConfigSpringLifecycle">
+        <constructor-arg ref="configClient"/>
+    </bean>
+
+    <bean id="serverConfig" class="io.dynamicconfig.spring.XmlConfigurationTest$ServerConfig"/>
+
+</beans>
