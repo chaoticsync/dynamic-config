@@ -1,0 +1,15 @@
+server:
+  port: 9000
+
+feature:
+  enabled: true
+
+app:
+  name: dynamic-config-demo
+
+database:
+  timeout: 5000
+
+service:
+  threshold: 0.75
+  ratio: 0.5
