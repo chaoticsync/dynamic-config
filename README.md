@@ -13,6 +13,7 @@ The SDK provides a common configuration API across local files, application defa
 | `dynamic-config-core` | `dynamic-config-core` | Framework-independent configuration engine |
 | `dynamic-config-kubernetes` | `dynamic-config-kubernetes` | Kubernetes ConfigMap file + watch integration |
 | `dynamic-config-spring` | `dynamic-config-spring` | Spring `@DynamicValue`, XML, lifecycle integration |
+| `dynamic-config-demo` | *(not published)* | Runnable core + Spring examples (repo only) |
 
 **Deferred (not in v1.0):** ConfigHub — planned for a future release.
 
@@ -68,6 +69,54 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ```
 
 `dynamic-config-spring` depends on `dynamic-config-core`. Add `dynamic-config-kubernetes` separately when using ConfigMap sources.
+
+---
+
+## Demo
+
+The `dynamic-config-demo` module is a small runnable project in this repository. It is **not published** to Maven Central — use it to explore the SDK locally.
+
+**Core demo** — file sources, precedence, typed getters, watchers, and `refresh()`:
+
+```bash
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+mvn -pl dynamic-config-demo -am exec:java
+```
+
+**Kubernetes file demo** — mounted ConfigMap file at `HIGHEST` priority (no cluster):
+
+```bash
+mvn -pl dynamic-config-demo -am exec:java -Dexec.mainClass=io.dynamicconfig.demo.KubernetesDemo
+```
+
+**Polling demo** — `refreshInterval` picks up on-disk file changes automatically:
+
+```bash
+mvn -pl dynamic-config-demo -am exec:java -Dexec.mainClass=io.dynamicconfig.demo.PollingDemo
+```
+
+**Spring demo (`@DynamicValue`)** — field injection and runtime updates for all supported types:
+
+```bash
+mvn -pl dynamic-config-demo -am exec:java -Dexec.mainClass=io.dynamicconfig.demo.spring.SpringDemo
+```
+
+Annotated bean: `dynamic-config-demo/src/main/java/io/dynamicconfig/demo/spring/AppSettings.java`
+
+```java
+@Component
+public class AppSettings {
+
+    @DynamicValue("server.port")
+    private int serverPort;
+
+    @DynamicValue("server.host")
+    private String serverHost;
+    // long, boolean, double, float supported too — see AppSettings
+}
+```
+
+See `dynamic-config-demo/src/main/java/io/dynamicconfig/demo/` for all entry points.
 
 ---
 
@@ -470,6 +519,7 @@ Other commands:
 mvn clean test
 mvn clean install
 mvn clean install -DskipTests
+mvn deploy   # publishes core, kubernetes, and spring only (demo is skipped)
 ```
 
 JaCoCo reports are generated under `target/site/jacoco/` per module on `verify`.
@@ -498,11 +548,13 @@ dynamic-config/
 │       ├── builder/
 │       ├── source/
 │       └── watch/
-└── dynamic-config-spring/
-    └── src/main/java/io/dynamicconfig/spring/
-        ├── annotation/
-        ├── conversion/
-        └── processor/
+├── dynamic-config-spring/
+│   └── src/main/java/io/dynamicconfig/spring/
+│       ├── annotation/
+│       ├── conversion/
+│       └── processor/
+└── dynamic-config-demo/          # runnable examples (not published)
+    └── src/main/java/io/dynamicconfig/demo/
 ```
 
 ---

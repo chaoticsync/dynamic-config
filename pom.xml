@@ -26,6 +26,7 @@
         <module>dynamic-config-core</module>
         <module>dynamic-config-kubernetes</module>
         <module>dynamic-config-spring</module>
+        <module>dynamic-config-demo</module>
 
     </modules>
 
