@@ -42,7 +42,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 ```xml
 <dependency>
-    <groupId>io.dynamicconfig</groupId>
+    <groupId>io.github.chaoticsync</groupId>
     <artifactId>dynamic-config-core</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
@@ -52,7 +52,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 ```xml
 <dependency>
-    <groupId>io.dynamicconfig</groupId>
+    <groupId>io.github.chaoticsync</groupId>
     <artifactId>dynamic-config-kubernetes</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
@@ -62,7 +62,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 
 ```xml
 <dependency>
-    <groupId>io.dynamicconfig</groupId>
+    <groupId>io.github.chaoticsync</groupId>
     <artifactId>dynamic-config-spring</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 </dependency>
@@ -519,10 +519,48 @@ Other commands:
 mvn clean test
 mvn clean install
 mvn clean install -DskipTests
-mvn deploy   # publishes core, kubernetes, and spring only (demo is skipped)
 ```
 
 JaCoCo reports are generated under `target/site/jacoco/` per module on `verify`.
+
+---
+
+## Publishing to Maven Central
+
+Release publishing is automated via GitHub Actions (`.github/workflows/release.yml`).
+
+### One-time setup
+
+1. Ensure namespace `io.github.chaoticsync` is verified at [central.sonatype.com](https://central.sonatype.com)
+2. Generate a Central Portal **user token**
+3. Create a GPG key and publish the public key to a keyserver
+4. Add these GitHub repository secrets:
+
+| Secret | Value |
+|---|---|
+| `CENTRAL_USERNAME` | Central Portal token username |
+| `CENTRAL_TOKEN` | Central Portal token password |
+| `GPG_PRIVATE_KEY` | ASCII-armored GPG private key |
+| `GPG_PASSPHRASE` | GPG key passphrase |
+
+### Release
+
+Tag a release version (no `-SNAPSHOT` suffix):
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+CI runs tests, signs artifacts, uploads to Central, and auto-publishes. The `dynamic-config-demo` module is excluded from deploy.
+
+You can also trigger a release manually from the GitHub Actions tab (`workflow_dispatch`).
+
+Local release (requires Central credentials in `~/.m2/settings.xml` and a local GPG key):
+
+```bash
+./mvnw clean verify deploy -Prelease
+```
 
 ---
 
