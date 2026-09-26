@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="
@@ -11,16 +10,13 @@
     <groupId>io.github.chaoticsync</groupId>
     <artifactId>dynamic-config-sdk</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-
     <packaging>pom</packaging>
 
     <name>Dynamic Config SDK</name>
-
     <description>
         Dynamic configuration SDK supporting Properties, YAML, JSON,
         Kubernetes ConfigMap and Spring Framework.
     </description>
-
     <url>https://github.com/chaoticsync/dynamic-config</url>
 
     <licenses>
@@ -46,28 +42,16 @@
         <tag>HEAD</tag>
     </scm>
 
-    <distributionManagement>
-        <repository>
-            <id>central</id>
-            <url>https://central.sonatype.com/api/v1/publisher</url>
-        </repository>
-    </distributionManagement>
-
     <modules>
-
         <module>dynamic-config-core</module>
         <module>dynamic-config-kubernetes</module>
         <module>dynamic-config-spring</module>
         <module>dynamic-config-demo</module>
-
     </modules>
 
     <properties>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <java.version>17</java.version>
-
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <jackson.version>2.18.2</jackson.version>
@@ -79,7 +63,6 @@
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
         <central-publishing-maven-plugin.version>0.11.0</central-publishing-maven-plugin.version>
-
     </properties>
 
     <profiles>
@@ -87,7 +70,6 @@
             <id>release</id>
             <build>
                 <plugins>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
@@ -148,11 +130,10 @@
                         <configuration>
                             <publishingServerId>central</publishingServerId>
                             <autoPublish>true</autoPublish>
-                            <waitUntil>published</waitUntil>
+                            <waitUntil>validated</waitUntil>
                             <deploymentName>dynamic-config-sdk-${project.version}</deploymentName>
                         </configuration>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>
@@ -160,7 +141,6 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -196,7 +176,6 @@
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
     </build>
 
