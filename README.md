@@ -540,8 +540,20 @@ Release publishing is automated via GitHub Actions (`.github/workflows/release.y
 |---|---|
 | `CENTRAL_USERNAME` | Central Portal token username |
 | `CENTRAL_TOKEN` | Central Portal token password |
-| `GPG_PRIVATE_KEY` | ASCII-armored GPG private key |
+| `GPG_PRIVATE_KEY` | ASCII-armored private key **or** base64-encoded key (see below) |
 | `GPG_PASSPHRASE` | GPG key passphrase |
+
+**GPG private key for CI** — export and add as `GPG_PRIVATE_KEY`:
+
+```bash
+# Option A: paste armored key directly (must include BEGIN/END lines)
+gpg --armor --export-secret-keys YOUR_KEY_ID
+
+# Option B (recommended): base64-encode to avoid newline issues in GitHub Secrets
+gpg --armor --export-secret-keys YOUR_KEY_ID | base64 -w0
+```
+
+If import fails in CI, re-create the secret using **Option B**.
 
 ### Release
 
