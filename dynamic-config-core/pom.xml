@@ -17,6 +17,8 @@
 
     <artifactId>dynamic-config-core</artifactId>
 
+    <name>dynamic-config-core</name>
+
     <dependencies>
 
         <dependency>
